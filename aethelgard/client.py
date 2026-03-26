@@ -46,7 +46,7 @@ class SecurePassSDK:
     Provides easy access to zero-storage password generation and deterministic versioning.
     """
     
-    def __init__(self, api_key, base_url="https://securepasspro.co/api", timeout=10):
+    def __init__(self, api_key, base_url="https://www.securepasspro.co/api", timeout=10):
         self.api_key = api_key
         self.base_url = base_url.rstrip('/')
         self.timeout = timeout
@@ -79,6 +79,9 @@ class SecurePassSDK:
 
     def _make_request(self, method, endpoint, data=None):
         start_time = time.time()
+        if not self.base_url.endswith('/api'):
+            self.base_url = f"{self.base_url}/api"
+            
         url = f"{self.base_url}{endpoint}"
         headers = {
             "Authorization": f"Bearer {self.api_key}",
